@@ -22,7 +22,7 @@ final class ServerTest extends TestCase
 
         $server->host($vm);
 
-        $this->assertEquals(1, $server->getAvaliableCpu());
+        $this->assertEquals(1, $server->getAvailableCpu());
         $this->assertEquals(16, $server->getAvailableRam());
         $this->assertEquals(90, $server->getAvailableHdd());
     }

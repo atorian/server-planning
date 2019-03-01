@@ -28,9 +28,9 @@ final class Server
      */
     public function __construct($cpu, $ram, $hdd)
     {
-        $this->cpu = $this->availableCpu = $cpu;
-        $this->ram = $this->availableRam = $ram;
-        $this->hdd = $this->availableHdd = $hdd;
+        $this->cpu = $cpu;
+        $this->ram = $ram;
+        $this->hdd = $hdd;
     }
 
     public function canHost(VirtualMachine $vm): bool
@@ -47,7 +47,14 @@ final class Server
         $this->availableHdd -= $vm->getHdd();
     }
 
-    public function getAvaliableCpu(): int
+    public function empty()
+    {
+        $this->cpu = $this->availableCpu;
+        $this->ram = $this->availableRam;
+        $this->hdd = $this->availableHdd;
+    }
+
+    public function getAvailableCpu(): int
     {
         return $this->availableCpu;
     }

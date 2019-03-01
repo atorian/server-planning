@@ -22,12 +22,16 @@ class ServerPanning
      */
     public function calculate(Server $server, array $virtualMachines): int
     {
-        $serversNeeded = 0;
+        if (count($virtualMachines) == 0) {
+            return 0;
+        }
+
+        $server->empty();
+        $serversNeeded = 1;
 
         foreach ($virtualMachines as $vm) {
             if ($server->canHost($vm)) {
                 $server->host($vm);
-                $serversNeeded += 1;
             }
         }
 
