@@ -11,7 +11,6 @@ final class ServerTest extends TestCase
     public function test_can_host_vm_if_all_parameters_are_gte_expected(): void
     {
         $server = new Server(2, 32, 100);
-
         $vm = new VirtualMachine(1, 16, 10);
 
         $this->assertTrue($server->canHost($vm));
@@ -31,7 +30,6 @@ final class ServerTest extends TestCase
 
     public function test_throws_is_hosted_vm_is_too_big(): void
     {
-
         $server = new Server(1, 16, 10);
         $vm = new VirtualMachine(2, 32, 100);
 

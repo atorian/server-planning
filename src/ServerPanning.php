@@ -26,7 +26,6 @@ class ServerPanning
             return 0;
         }
 
-        $server->empty();
         $serversNeeded = 1;
 
         foreach ($virtualMachines as $vm) {
