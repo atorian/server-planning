@@ -31,6 +31,7 @@ final class Server
         $this->cpu = $cpu;
         $this->ram = $ram;
         $this->hdd = $hdd;
+        $this->empty();
     }
 
     public function canHost(VirtualMachine $vm): bool

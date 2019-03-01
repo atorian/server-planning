@@ -11,7 +11,6 @@ final class ServerTest extends TestCase
     public function test_can_host_vm_if_all_parameters_are_gte_expected(): void
     {
         $server = new Server(2, 32, 100);
-        $server->empty();
 
         $vm = new VirtualMachine(1, 16, 10);
 
@@ -23,7 +22,6 @@ final class ServerTest extends TestCase
         $server = new Server(2, 32, 100);
         $vm = new VirtualMachine(1, 16, 10);
 
-        $server->empty();
         $server->host($vm);
 
         $this->assertEquals(1, $server->getAvailableCpu());
@@ -36,8 +34,6 @@ final class ServerTest extends TestCase
 
         $server = new Server(1, 16, 10);
         $vm = new VirtualMachine(2, 32, 100);
-
-        $server->empty();
 
         $this->expectException(InsufficientResourcesException::class);
 
