@@ -16,14 +16,14 @@ final class ServerPlanningTest extends TestCase
         $this->assertEquals(0, $planner->calculate($server, []));
     }
 
-    public function test_needs_1_server_if_VirtualMachine_fits_server(): void
-    {
-        $planner = new ServerPanning();
-        $server = new Server(2, 32, 100);
-        $vm = new VirtualMachine(1, 16, 10);
-
-        $this->assertEquals(1, $planner->calculate($server, [$vm]));
-    }
+//    public function test_needs_1_server_if_VirtualMachine_fits_server(): void
+//    {
+//        $planner = new ServerPanning();
+//        $server = new Server(2, 32, 100);
+//        $vm = new VirtualMachine(1, 16, 10);
+//
+//        $this->assertEquals(1, $planner->calculate($server, [$vm]));
+//    }
 
     public function test_needs_1_server_if_2_VirtualMachines_fits_server(): void
     {

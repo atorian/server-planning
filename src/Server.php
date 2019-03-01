@@ -19,6 +19,8 @@ final class Server
     private $availableRam = 0;
     /** @var int */
     private $availableHdd = 0;
+    /** @var int */
+    private $instances = 0;
 
     /**
      * Server constructor.
@@ -31,47 +33,42 @@ final class Server
         $this->cpu = $cpu;
         $this->ram = $ram;
         $this->hdd = $hdd;
-        $this->empty();
+        $this->next();
     }
 
-    public function canHost(VirtualMachine $vm): bool
+    private function canHost(VirtualMachine $vm): bool
     {
         return $this->availableCpu >= $vm->getCpu() &&
             $this->availableRam >= $vm->getRam() &&
             $this->availableHdd >= $vm->getHdd();
     }
 
-    public function empty()
+    private function next()
     {
         $this->availableCpu = $this->cpu;
         $this->availableRam = $this->ram;
         $this->availableHdd = $this->hdd;
+
+        $this->instances += 1;
     }
 
     public function host(VirtualMachine $vm)
     {
+        if (!$this->canHost($vm)) {
+            $this->next();
+        }
+
         $this->availableCpu -= $vm->getCpu();
         $this->availableRam -= $vm->getRam();
         $this->availableHdd -= $vm->getHdd();
 
         if ($this->availableCpu < 0 || $this->availableRam < 0 || $this->availableHdd < 0) {
-            throw new InsufficientResourcesException();
+            throw new InsufficientResourcesException($this, $vm);
         }
     }
 
-
-    public function getAvailableCpu(): int
+    public function instances(): int
     {
-        return $this->availableCpu;
-    }
-
-    public function getAvailableRam(): int
-    {
-        return $this->availableRam;
-    }
-
-    public function getAvailableHdd(): int
-    {
-        return $this->availableHdd;
+        return $this->instances;
     }
 }

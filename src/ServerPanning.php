@@ -26,18 +26,10 @@ class ServerPanning
             return 0;
         }
 
-        $serversNeeded = 1;
-
         foreach ($virtualMachines as $vm) {
-            if ($server->canHost($vm)) {
-                $server->host($vm);
-            } else {
-                $server->empty();
-                $serversNeeded += 1;
-                $server->host($vm);
-            }
+            $server->host($vm);
         }
 
-        return $serversNeeded;
+        return $server->instances();
     }
 }
