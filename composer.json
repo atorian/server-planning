@@ -1,0 +1,27 @@
+{
+    "name": "atorian/server-planning",
+    "description": "Server usage planner",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "ServerPlanning\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexey Kostiuk",
+            "email": "atorian.ak@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    }
+}
