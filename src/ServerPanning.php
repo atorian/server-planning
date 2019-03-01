@@ -15,8 +15,22 @@ class ServerPanning
     {
     }
 
+    /**
+     * @param Server $server
+     * @param VirtualMachine[] $virtualMachines
+     * @return int
+     */
     public function calculate(Server $server, array $virtualMachines): int
     {
-        return 0;
+        $serversNeeded = 0;
+
+        foreach ($virtualMachines as $vm) {
+            if ($server->canHost($vm)) {
+                $server->host($vm);
+                $serversNeeded += 1;
+            }
+        }
+
+        return $serversNeeded;
     }
 }
