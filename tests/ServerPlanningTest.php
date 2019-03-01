@@ -37,7 +37,7 @@ final class ServerPlanningTest extends TestCase
         $this->assertEquals(1, $planner->calculate($server, $vms));
     }
 
-    public function test_needs_2_server_when_server_can_host_biggest_vm(): void
+    public function test_needs_2_servers_when_server_can_host_biggest_vm(): void
     {
         $planner = new ServerPanning();
         $server = new Server(2, 32, 100);

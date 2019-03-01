@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use ServerPlanning\InsufficientResourcesException;
 use ServerPlanning\Server;
-use ServerPlanning\ServerPanning;
 use ServerPlanning\VirtualMachine;
 
 final class ServerTest extends TestCase
@@ -29,6 +29,19 @@ final class ServerTest extends TestCase
         $this->assertEquals(1, $server->getAvailableCpu());
         $this->assertEquals(16, $server->getAvailableRam());
         $this->assertEquals(90, $server->getAvailableHdd());
+    }
+
+    public function test_throws_is_hosted_vm_is_too_big(): void
+    {
+
+        $server = new Server(1, 16, 10);
+        $vm = new VirtualMachine(2, 32, 100);
+
+        $server->empty();
+
+        $this->expectException(InsufficientResourcesException::class);
+
+        $server->host($vm);
     }
 
 }

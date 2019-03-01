@@ -52,6 +52,10 @@ final class Server
         $this->availableCpu -= $vm->getCpu();
         $this->availableRam -= $vm->getRam();
         $this->availableHdd -= $vm->getHdd();
+
+        if ($this->availableCpu < 0 || $this->availableRam < 0 || $this->availableHdd < 0) {
+            throw new InsufficientResourcesException();
+        }
     }
 
 
