@@ -32,6 +32,10 @@ class ServerPanning
         foreach ($virtualMachines as $vm) {
             if ($server->canHost($vm)) {
                 $server->host($vm);
+            } else {
+                $server->empty();
+                $serversNeeded += 1;
+                $server->host($vm);
             }
         }
 

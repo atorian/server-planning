@@ -35,9 +35,16 @@ final class Server
 
     public function canHost(VirtualMachine $vm): bool
     {
-        return $this->cpu >= $vm->getCpu() &&
-            $this->ram >= $vm->getRam() &&
-            $this->hdd >= $vm->getHdd();
+        return $this->availableCpu >= $vm->getCpu() &&
+            $this->availableRam >= $vm->getRam() &&
+            $this->availableHdd >= $vm->getHdd();
+    }
+
+    public function empty()
+    {
+        $this->availableCpu = $this->cpu;
+        $this->availableRam = $this->ram;
+        $this->availableHdd = $this->hdd;
     }
 
     public function host(VirtualMachine $vm)
@@ -47,12 +54,6 @@ final class Server
         $this->availableHdd -= $vm->getHdd();
     }
 
-    public function empty()
-    {
-        $this->cpu = $this->availableCpu;
-        $this->ram = $this->availableRam;
-        $this->hdd = $this->availableHdd;
-    }
 
     public function getAvailableCpu(): int
     {
