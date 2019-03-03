@@ -7,29 +7,24 @@ namespace ServerPlanning;
 
 class ServerPanning
 {
-
     /**
-     * ServerPanning constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * @param Server $server
+     * Not static as it's better for testing and
+     * most likely will be used later
+     *
+     * @param Server $serverType
      * @param VirtualMachine[] $virtualMachines
      * @return int
      */
-    public function calculate(Server $server, array $virtualMachines): int
+    public function calculate(Server $serverType, array $virtualMachines): int
     {
         if (count($virtualMachines) == 0) {
             return 0;
         }
 
         foreach ($virtualMachines as $vm) {
-            $server->host($vm);
+            $serverType->host($vm);
         }
 
-        return $server->instances();
+        return $serverType->instances();
     }
 }

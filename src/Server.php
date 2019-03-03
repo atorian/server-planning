@@ -40,7 +40,7 @@ final class Server
             $this->availableHdd >= $vm->getHdd();
     }
 
-    private function next()
+    private function next(): void
     {
         $this->availableCpu = $this->cpu;
         $this->availableRam = $this->ram;
@@ -49,7 +49,7 @@ final class Server
         $this->instances += 1;
     }
 
-    public function host(VirtualMachine $vm)
+    public function host(VirtualMachine $vm): void
     {
         if (!$this->canHost($vm)) {
             $this->next();
@@ -61,9 +61,13 @@ final class Server
 
         if ($this->availableCpu < 0) {
             throw InsufficientResourcesException::cpu($this, $vm);
-        } elseif ($this->availableRam < 0) {
+        }
+
+        if ($this->availableRam < 0) {
             throw InsufficientResourcesException::ram($this, $vm);
-        } elseif ($this->availableHdd < 0) {
+        }
+
+        if ($this->availableHdd < 0) {
             throw InsufficientResourcesException::hdd($this, $vm);
         }
     }
