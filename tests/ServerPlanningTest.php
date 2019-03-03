@@ -11,7 +11,7 @@ final class ServerPlanningTest extends TestCase
     public function test_needs_0_servers_if_VirtualMachines_list_is_empty(): void
     {
         $planner = new ServerPanning();
-        $server = new Server(0, 0, 0);
+        $server = new Server(1, 1, 1);
 
         $this->assertEquals(0, $planner->calculate($server, []));
     }
