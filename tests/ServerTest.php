@@ -8,13 +8,32 @@ use ServerPlanning\VirtualMachine;
 
 final class ServerTest extends TestCase
 {
-    public function test_throws_if_hosted_vm_is_too_big(): void
+
+    /**
+     * @dataProvider bigVm
+     */
+    public function test_throws_if_hosted_vm_is_too_big(VirtualMachine $vm): void
     {
-        $server = new Server(1, 16, 10);
-        $vm = new VirtualMachine(2, 32, 100);
+        $server = new Server(2, 32, 100);
 
         $this->expectException(InsufficientResourcesException::class);
 
         $server->host($vm);
+    }
+
+    public function test_required_instances_is_0_if_no_vms_hosted(): void
+    {
+        $server = new Server(1, 16, 10);
+
+        $this->assertEquals(0, $server->instances());
+    }
+
+    public function bigVm()
+    {
+        return [
+            [new VirtualMachine(4, 32, 100)],
+            [new VirtualMachine(2, 64, 100)],
+            [new VirtualMachine(2, 32, 200)],
+        ];
     }
 }
