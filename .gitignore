@@ -6,3 +6,4 @@ bin/
 composer
 
 .phpunit.result.cache
+phpunit.xml
