@@ -11,14 +11,6 @@ final class Server
     private $ram;
     /** @var int */
     private $hdd;
-    /** @var int */
-    private $availableCpu = 0;
-    /** @var int */
-    private $availableRam = 0;
-    /** @var int */
-    private $availableHdd = 0;
-    /** @var int */
-    private $instances = 0;
 
     /**
      * @param $cpu int - max available CPU units
@@ -33,50 +25,6 @@ final class Server
         // otherwise use other validation method
         $this->ram = self::validateResource('RAM', $ram);
         $this->hdd = self::validateResource('HDD', $hdd);
-    }
-
-    private function canHost(VirtualMachine $vm): bool
-    {
-        return $this->availableCpu >= $vm->getCpu() &&
-            $this->availableRam >= $vm->getRam() &&
-            $this->availableHdd >= $vm->getHdd();
-    }
-
-    private function next(): void
-    {
-        $this->availableCpu = $this->cpu;
-        $this->availableRam = $this->ram;
-        $this->availableHdd = $this->hdd;
-
-        $this->instances += 1;
-    }
-
-    public function host(VirtualMachine $vm): void
-    {
-        if (!$this->canHost($vm)) {
-            $this->next();
-        }
-
-        $this->availableCpu -= $vm->getCpu();
-        $this->availableRam -= $vm->getRam();
-        $this->availableHdd -= $vm->getHdd();
-
-        if ($this->availableCpu < 0) {
-            throw InsufficientResourcesException::cpu($this, $vm);
-        }
-
-        if ($this->availableRam < 0) {
-            throw InsufficientResourcesException::ram($this, $vm);
-        }
-
-        if ($this->availableHdd < 0) {
-            throw InsufficientResourcesException::hdd($this, $vm);
-        }
-    }
-
-    public function instances(): int
-    {
-        return $this->instances;
     }
 
     /**

@@ -8,9 +8,6 @@ namespace ServerPlanning;
 class ServerPanning
 {
     /**
-     * Not static as it's better for testing and
-     * most likely will be used later
-     *
      * @param Server $serverType
      * @param VirtualMachine[] $virtualMachines
      * @return int
@@ -21,10 +18,11 @@ class ServerPanning
             return 0;
         }
 
+        $policy = new FirstFitPolicy($serverType);
         foreach ($virtualMachines as $vm) {
-            $serverType->host($vm);
+            $policy->host($vm);
         }
 
-        return $serverType->instances();
+        return $policy->instances();
     }
 }
