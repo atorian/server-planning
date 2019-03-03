@@ -28,9 +28,27 @@ class VirtualMachine
      */
     public function __construct($cpu, $ram, $hdd)
     {
-        $this->cpu = $cpu;
-        $this->ram = $ram;
-        $this->hdd = $hdd;
+        $this->cpu = self::validateResource('CPU', $cpu);
+
+        // for simplicity assuming that RAM and HDD provisioned without decimal parts
+        // otherwise use other validation method
+        $this->ram = self::validateResource('RAM', $ram);
+        $this->hdd = self::validateResource('HDD', $hdd);
+    }
+
+    private static function validateResource($resource, $input)
+    {
+        $value = filter_var($input, FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1
+            ],
+        ]);
+
+        if (!$value) {
+            throw new InvalidResourceProvisionException($resource, $value);
+        }
+
+        return $value;
     }
 
     public function getCpu(): int {
